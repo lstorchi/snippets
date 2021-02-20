@@ -67,15 +67,21 @@ for l in fp:
 
                 differ = 0
                 for n in an1:
-                    if (an1[n] != an2[n]):
+                    if n in an2:
+                        if (an1[n] != an2[n]):
+                            differ += 1
+                    else:
                         differ += 1
 
-                print("%10.5f %5d "%(df["RMSD_Align"].values[0], differ))
+                if differ == 0:
+                    print(sl[0] , " %10.5f %5d "%(df["RMSD_Align"].values[0], differ), flush=True)
+                else:
+                    print(sl[0] , " %10.5f %5d differ "%(df["RMSD_Align"].values[0], differ), flush=True)
 
                 os.remove("rmsd.csv")
 
             except subprocess.CalledProcessError:
-                print("Error ", smi1, " vs " , smi2)
+                print(sl[0] , " Error ", smi1, " vs " , smi2)
 
             os.remove("1.smi") 
             os.remove("2.smi") 
