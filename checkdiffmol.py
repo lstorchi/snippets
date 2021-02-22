@@ -78,15 +78,20 @@ for l in fp:
                 else:
                     print(sl[0] , " %10.5f %5d differ "%(df["RMSD_Align"].values[0], differ), flush=True)
 
-                os.remove("rmsd.csv")
+                if os.path.exists("rmsd.csv"):
+                    os.remove("rmsd.csv")
 
             except subprocess.CalledProcessError:
                 print(sl[0] , " Error ", smi1, " vs " , smi2)
 
-            os.remove("1.smi") 
-            os.remove("2.smi") 
-            os.remove("1.pdb") 
-            os.remove("2.pdb") 
+            if os.path.exists("1.smi"):
+                os.remove("1.smi") 
+            if os.path.exists("2.smi"):
+                os.remove("2.smi") 
+            if os.path.exists("1.pdb"):
+                os.remove("1.pdb") 
+            if os.path.exists("2.pdb"):
+                os.remove("2.pdb") 
         else:
             print("ERROR")
             exit(1)
