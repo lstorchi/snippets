@@ -1,3 +1,4 @@
+import os
 import sys
 import cv2
 import numpy as np
@@ -75,12 +76,18 @@ def extract_photos_from_scan(image_path,
 
     print(f"Extraction complete. Saved {saved_count} photos.")
 
+    return saved_count
+
 # Run the function
 # Adjust 'min_area' if it misses small photos or picks up dust
 
 if len(sys.argv) != 3:
-    print("Usage: ", sys.argv[0], " <image_path> <start_count>")
+    print("Usage: ", sys.argv[0], " <images_path> <start_count>")
     sys.exit(1)
 
-extract_photos_from_scan(sys.argv[1], min_area=1000, \
-                         startcount=int(sys.argv[2]))
+newcount = int(sys.argv[2])
+for imagename in os.listdir(sys.argv[1]):
+    image_path = os.path.join(sys.argv[1], imagename)
+    howmany = extract_photos_from_scan(image_path, min_area=1000, \
+                          startcount=newcount)
+    newcount += howmany
